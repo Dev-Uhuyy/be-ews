@@ -27,21 +27,6 @@ class Periode extends Model
         'status',
     ];
 
-    public static function checkCurrentDateInRangeTA()
-    {
-        $currentDate = now(); // Mendapatkan tanggal sekarang
-        $periode = self::where('tgl_awal_ta', '<=', $currentDate)
-            ->where('tgl_akhir_ta', '>=', $currentDate)
-            ->where('status', 1)
-            ->first();
-
-        if (!$periode) {
-            return false; // Tidak ada periode yang valid
-        }
-
-        return true; // Tanggal sekarang dalam range
-    }
-
     public static function checkCurrentDateInRange()
     {
         $currentDate = now(); // Mendapatkan tanggal sekarang
