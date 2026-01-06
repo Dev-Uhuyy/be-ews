@@ -22,7 +22,7 @@ return new class extends Migration
 
             // Pastikan tabel ini memang ada dan namanya sesuai
             $table->foreignId('kelompok_id')
-                ->constrained('kelompok_matakuliahs')
+                ->constrained('kelompok_mata_kuliah')
                 ->cascadeOnDelete();
 
             $table->enum('status', ['B', 'U']);
@@ -31,9 +31,7 @@ return new class extends Migration
             $table->integer('nilai_uts')->nullable();
             $table->integer('nilai_akhir_angka')->nullable();
             $table->string('nilai_akhir_huruf', 5)->nullable();
-
-            // Jika Anda ingin ada created_at & updated_at, aktifkan baris ini:
-            // $table->timestamps();
+            $table->timestamps();
         });
     }
 
