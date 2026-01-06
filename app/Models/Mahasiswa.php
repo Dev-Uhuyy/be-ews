@@ -15,17 +15,40 @@ class Mahasiswa extends Model
 
     protected $fillable = [
         'user_id',
-        'periode_id',
+        'prodi_id',
         'nim',
-        'ipk',
         'transkrip',
         'telepon',
         'minat',
-        'sks',
     ];
 
     public function user()
     {
         return $this->hasOne(User::class, 'id', 'user_id');
+    }
+
+    public function prodi()
+    {
+        return $this->hasOne(Prodi::class, 'id', 'prodi_id');
+    }
+
+    public function ipsmahasiswa()
+    {
+        return $this->hasOne(IpsMahasiswa::class, 'mahasiswa_id', 'id');
+    }
+
+    public function akademikmahasiswa()
+    {
+        return $this->hasOne(AkademikMahasiswa::class, 'mahasiswa_id', 'id');
+    }
+
+    public function khskrsmahasiswa()
+    {
+        return $this->hasMany(KhsKrsMahasiswa::class, 'mahasiswa_id', 'id');
+    }
+
+    public function ewsticket()
+    {
+        return $this->hasMany(EwsTicket::class, 'mahasiswa_id', 'id');
     }
 }
