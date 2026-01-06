@@ -11,12 +11,13 @@ class AkademikMahasiswa extends Model
     protected $fillable = [
         'mahasiswa_id',
         'dosen_wali_id',
-        'tahun_akademik',
         'semester_aktif',
         'tahun_masuk',
         'ipk',
-        'sks_saat_ini',
         'sks_tempuh',
+        'sks_now',
+        'sks_lulus',
+        'sks_gagal',
     ];
 
     public function mahasiswa()
