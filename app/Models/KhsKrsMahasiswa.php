@@ -14,11 +14,10 @@ class KhsKrsMahasiswa extends Model
         'kelompok_mata_kuliah_id',
         'absen',
         'status',
-        'nilai_tugas',
         'nilai_uts',
         'nilai_uas',
-        'nilai_angka',
-        'nilai_huruf',
+        'nilai_akhir_angka',
+        'nilai_akhir_huruf',
     ];
 
     public function mahasiswa()
