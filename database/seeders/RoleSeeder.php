@@ -17,11 +17,5 @@ class RoleSeeder extends Seeder
 
         // Create 'koor' role
         Role::firstOrCreate(['name' => 'koor', 'guard_name' => 'web']);
-        Role::firstOrCreate(['name' => 'dosen', 'guard_name' => 'web']);
-        Role::firstOrCreate(['name' => 'mahasiswa', 'guard_name' => 'web']);
-        
-        // Optional: Create other common roles if they don't exist
-        // Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'web']);
-        // Role::firstOrCreate(['name' => 'user', 'guard_name' => 'web']);
     }
 }
