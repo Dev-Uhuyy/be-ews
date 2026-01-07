@@ -10,6 +10,7 @@ class MataKuliahPeminatan extends Model
 
     protected $fillable = [
         'peminatan',
+        'prodi_id',
     ];
 
     public function matakuliah()
@@ -17,6 +18,10 @@ class MataKuliahPeminatan extends Model
         return $this->hasMany(MataKuliah::class, 'peminatan_id');
     }
 
+    public function prodi()
+    {
+        return $this->belongsTo(Prodi::class);
+    }
 }
 
 

@@ -11,15 +11,13 @@ class EarlyWarningSystem extends Model
     protected $fillable = [
         'akademik_mahasiswa_id',
         'status',
+        'status_kelulusan',
+        'status_rekomitmen',
+        'link_rekomitmen',
     ];
 
     public function akademik_mahasiswa()
     {
         return $this->belongsTo(AkademikMahasiswa::class,'akademik_mahasiswa_id', 'id');
-    }
-
-    public function ews_tickets()
-    {
-        return $this->hasMany(EwsTicket::class, 'ews_id', 'id');
     }
 }
