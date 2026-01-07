@@ -47,8 +47,4 @@ class Mahasiswa extends Model
         return $this->hasMany(KhsKrsMahasiswa::class, 'mahasiswa_id', 'id');
     }
 
-    public function ewsticket()
-    {
-        return $this->hasMany(EwsTicket::class, 'mahasiswa_id', 'id');
-    }
 }
