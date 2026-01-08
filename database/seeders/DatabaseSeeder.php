@@ -29,7 +29,8 @@ class DatabaseSeeder extends Seeder
             // KelompokMataKuliahSeeder::class,
             // khs_krs_mahasiswa_seeder::class,
             // IpsMahasiswaSeeder::class,
-            AkademikMahasiswaSeeder::class,
+            // AkademikMahasiswaSeeder::class,
+            DummyDataSeeder::class,
         ]);
     }
 }
