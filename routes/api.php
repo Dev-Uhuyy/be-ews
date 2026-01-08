@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\KoorEws\DashboardController;
 use App\Http\Controllers\KoorEws\CapaianMhsController;
+use App\Http\Controllers\MahasiswaEws\DashboardController as MahasiswaDashboardController;
 
 
 // Route::get('/user', function (Request $request) {
@@ -41,5 +42,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/capaian/export-all-angkatan', [CapaianMhsController::class, 'exportCapaianAngkatan']);
         Route::get('/capaian/mkgagal-angkatan', [CapaianMhsController::class, 'getDaftarGagalPerAngkatan']);
         Route::get('/capaian/export-mk-gagal', [CapaianMhsController::class, 'exportDaftarGagalPerAngkatan']);
+    });
+
+    Route::middleware(['role:mahasiswa'])->prefix('mahasiswa')->group(function () {
+        Route::get('/dashboard/status-mahasiswa', [MahasiswaDashboardController::class, 'statusMahasiswa']);
     });
 });
