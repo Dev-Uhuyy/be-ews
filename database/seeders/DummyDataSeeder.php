@@ -30,6 +30,7 @@ class DummyDataSeeder extends Seeder
                 'password' => bcrypt('password'),
             ]);
             $userDosen->assignRole('dosen');
+
             
             $dosen = Dosen::create([
                 'user_id' => $userDosen->id,
@@ -54,6 +55,7 @@ class DummyDataSeeder extends Seeder
             // Random status as per previous controller logic
             $statuses = ['aktif', 'cuti', 'mangkir', 'DO', 'lulus', 'tidak_aktif'];
             $status = $statuses[array_rand($statuses)];
+
             
             $cuti2 = ($status == 'cuti') ? 'yes' : 'no';
 
@@ -63,12 +65,14 @@ class DummyDataSeeder extends Seeder
                 'telepon' => $faker->phoneNumber,
                 'minat' => $faker->randomElement(['Web', 'Mobile', 'Data Science']),
                 'cuti_2' => $cuti2,
+                // 'status_mahasiswa' is not mass assignable in some previous steps or default?
                 // 'status_mahasiswa' is not mass assignable in some previous steps or default? 
                 // In migration 'status_mahasiswa' is enum default 'aktif'.
                 // Ideally it should be fillable but I don't recall adding it to fillable in Step 213 (only added cuti_2).
                 // Let's check Mahasiswa model again if needed, but for now assuming it might be guarded or I should force it.
                 // Wait, if it's not in fillable, create won't work for it.
             ]);
+
             
             // Force update status if not fillable
             $mahasiswa->status_mahasiswa = $status;
@@ -97,6 +101,7 @@ class DummyDataSeeder extends Seeder
             // 5. Create EarlyWarningSystem
             $ewsStatus = $faker->randomElement(['tepat_waktu', 'normal', 'perhatian', 'kritis']);
             $kelulusanStatus = $faker->randomElement(['eligible', 'noneligible']);
+
             
             EarlyWarningSystem::create([
                 'akademik_mahasiswa_id' => $akademik->id,

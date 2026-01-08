@@ -37,6 +37,38 @@ abstract class Controller
         ], $status);
     }
 
+    public function paginationResponse($data, $message = 'Success', $status = 200)
+    {
+        return response()->json([
+            'success' => true,
+            'message' => $message,
+            'data' => $data->items(),
+            'pagination' => [
+                'total' => $data->total(),
+                'per_page' => $data->perPage(),
+                'current_page' => $data->currentPage(),
+                'last_page' => $data->lastPage(),
+                'from' => $data->firstItem(),
+                'to' => $data->lastItem(),
+            ],
+        ], $status);
+    }
+
+    public function paginate(int $total, int $perPage, int $currentPage, array $data, $next = null, $prev = null)
+    {
+        return [
+            'total' => $total,
+            'count' => count($data),
+            'per_page' => $perPage,
+            'current_page' => $currentPage,
+            'last_page' => (int) ceil($total / $perPage),
+            'links' => [
+                'prev' => $prev ?? ($currentPage > 1 ? url()->current() . '?page=' . ($currentPage - 1) : null),
+                'next' => $next ?? ($currentPage * $perPage < $total ? url()->current() . '?page=' . ($currentPage + 1) : null),
+            ]
+        ];
+    }
+
     public function respond($data)
     {
         return response()->json($data);
