@@ -10,8 +10,8 @@ class KhsKrsMahasiswa extends Model
 
     protected $fillable = [
         'mahasiswa_id',
-        'mata_kuliah_id',
-        'kelompok_mata_kuliah_id',
+        'matakuliah_id',
+        'kelompok_id',
         'absen',
         'status',
         'nilai_uts',
@@ -27,11 +27,11 @@ class KhsKrsMahasiswa extends Model
 
     public function mata_kuliah()
     {
-        return $this->belongsTo(MataKuliah::class, 'mata_kuliah_id');
+        return $this->belongsTo(MataKuliah::class, 'matakuliah_id');
     }
 
     public function kelompok_mata_kuliah()
     {
-        return $this->belongsTo(KelompokMataKuliah::class, 'kelompok_mata_kuliah_id');
+        return $this->belongsTo(KelompokMataKuliah::class, 'kelompok_id');
     }
 }
