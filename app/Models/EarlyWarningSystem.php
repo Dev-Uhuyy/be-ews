@@ -16,6 +16,7 @@ class EarlyWarningSystem extends Model
         'link_rekomitmen',
     ];
 
+    
     public function akademik_mahasiswa()
     {
         return $this->belongsTo(AkademikMahasiswa::class,'akademik_mahasiswa_id', 'id');
