@@ -13,22 +13,22 @@ class DatabaseSeeder extends Seeder
     /**
      * Seed the application's database.
      */
-    public function run(): void  
+    public function run(): void
     {
         // User::factory(10)->create();
 
         $this->call([
-            // RoleSeeder::class,
-            // ProdiSeeder::class,
-            // UserSeeder::class,
-            // DosenSeeder::class,
-            // MahasiswaSeeder::class,
-            // ProdiUserSeeder::class,
-            // MataKuliahPeminatanSeeder::class,
-            // MataKuliahSeeder::class,
-            // KelompokMataKuliahSeeder::class,
-            // khs_krs_mahasiswa_seeder::class,
-            // IpsMahasiswaSeeder::class,
+            RoleSeeder::class,
+            ProdiSeeder::class,
+            UserSeeder::class,
+            DosenSeeder::class,
+            MahasiswaSeeder::class,
+            ProdiUserSeeder::class,
+            MataKuliahPeminatanSeeder::class,
+            MataKuliahSeeder::class,
+            KelompokMataKuliahSeeder::class,
+            khs_krs_mahasiswa_seeder::class,
+            IpsMahasiswaSeeder::class,
             AkademikMahasiswaSeeder::class,
         ]);
     }
