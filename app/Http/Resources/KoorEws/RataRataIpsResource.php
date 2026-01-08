@@ -5,7 +5,7 @@ namespace App\Http\Resources\KoorEws;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class IpkEligibleResource extends JsonResource
+class RataRataIpsResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,10 +15,9 @@ class IpkEligibleResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'rata_rata_ipk' => $this['rata_rata_ipk'],
-            'rata_rata_ipk_per_angkatan' => $this['rata_rata_ipk_per_angkatan'],
-            'total_eligible' => $this['total_eligible'],
-            'total_not_eligible' => $this['total_not_eligible'],
+            'rata_rata_ips_terakhir' => $this['rata_rata_ips_terakhir'],
+            'total_mahasiswa_naik' => $this['total_mahasiswa_naik'],
+            'total_mahasiswa_turun' => $this['total_mahasiswa_turun'],
         ];
     }
 
@@ -32,7 +31,7 @@ class IpkEligibleResource extends JsonResource
         return [
             'meta' => [
                 'status' => 'success',
-                'message' => 'Data statistic IPK dan Eligibility berhasil diambil',
+                'message' => 'Data rata-rata IPS terakhir berhasil diambil',
                 'timestamp' => now()->toIso8601String(),
             ],
         ];

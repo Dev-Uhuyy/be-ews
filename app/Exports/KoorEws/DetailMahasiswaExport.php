@@ -36,8 +36,6 @@ class DetailMahasiswaExport implements FromCollection, WithHeadings, WithMapping
             'Nama Mahasiswa',
             'Angkatan',
             'Status Mahasiswa',
-            'IPK',
-            'SKS Lulus',
             'Dosen Wali',
             'Status EWS'
         ];
@@ -48,7 +46,7 @@ class DetailMahasiswaExport implements FromCollection, WithHeadings, WithMapping
         return [
             $row->nim,
             $row->user->name ?? '-',
-            // $row->akademikmahasiswa->tahun_masuk ?? '-',
+            $row->akademikmahasiswa->tahun_masuk ?? '-',
             $row->status_mahasiswa,
             // $row->akademikmahasiswa->ipk ?? 0,
             // $row->akademikmahasiswa->sks_lulus ?? 0,

@@ -29,11 +29,19 @@ class DashboardService
         // Ensure we handle case where there are no records (avg returns null)
         $avgIpk = $avgIpk ? round($avgIpk, 2) : 0;
 
+        // Calculate Average IPK per Angkatan
+        $ipkPerAngkatan = AkademikMahasiswa::select('tahun_masuk', DB::raw('ROUND(AVG(ipk), 2) as rata_rata'))
+            ->whereNotNull('tahun_masuk')
+            ->groupBy('tahun_masuk')
+            ->orderBy('tahun_masuk', 'desc')
+            ->get();
+
         $eligibleCount = EarlyWarningSystem::where('status_kelulusan', 'eligible')->count();
         $nonEligibleCount = EarlyWarningSystem::where('status_kelulusan', 'noneligible')->count();
 
         return [
             'rata_rata_ipk' => $avgIpk,
+            'rata_rata_ipk_per_angkatan' => $ipkPerAngkatan,
             'total_eligible' => $eligibleCount,
             'total_not_eligible' => $nonEligibleCount,
         ];
