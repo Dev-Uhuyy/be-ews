@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\KoorEws\DashboardController;
 use App\Http\Controllers\KoorEws\StatusMahasiswaController;
+use App\Http\Controllers\KoorEws\CapaianMhsController;
 
 
 // Route::get('/user', function (Request $request) {
@@ -29,5 +30,21 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/status-mahasiswa/ringkasan-status', [StatusMahasiswaController::class, 'getTableRingkasanStatusMahasiswa']);
         Route::get('/status-mahasiswa/mahasiswa-berisiko', [StatusMahasiswaController::class, 'getMahasiswaBerisko']);
         Route::get('/status-mahasiswa/ringkasan-status/export', [StatusMahasiswaController::class, 'exportTableRingkasanStatusMahasiswa']);
+        Route::get('/dashboard/summary-all', [DashboardController::class, 'summaryAll']);
+        Route::get('/dashboard/export-ringkasan', [DashboardController::class, 'exportSummaryAll']);
+        Route::get('/dashboard/detail-mahasiswa', [DashboardController::class, 'detailMahasiswa']);
+        Route::get('/dashboard/export-detail-mahasiswa', [DashboardController::class, 'exportDetailMahasiswa']);
+        
+        
+    });
+
+    Route::middleware(['role:koor'])->prefix('koor-ews')->group(function () {
+        // Capaian Mahasiswa Routes
+        Route::get('/capaian/all-mahasiswa', [CapaianMhsController::class, 'getRataRataIps']);
+        Route::get('/capaian/mk-gagal', [CapaianMhsController::class, 'getTop10MatkulGagal']);
+        Route::get('/capaian/all-angkatan', [CapaianMhsController::class, 'getAllAngkatan']);
+        Route::get('/capaian/export-all-angkatan', [CapaianMhsController::class, 'exportCapaianAngkatan']);
+        Route::get('/capaian/mkgagal-angkatan', [CapaianMhsController::class, 'getDaftarGagalPerAngkatan']);
+        Route::get('/capaian/export-mk-gagal', [CapaianMhsController::class, 'exportDaftarGagalPerAngkatan']);
     });
 });

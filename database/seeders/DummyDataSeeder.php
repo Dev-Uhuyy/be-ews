@@ -31,6 +31,7 @@ class DummyDataSeeder extends Seeder
             ]);
             $userDosen->assignRole('dosen');
 
+            
             $dosen = Dosen::create([
                 'user_id' => $userDosen->id,
                 'prodi_id' => 1,
@@ -55,6 +56,7 @@ class DummyDataSeeder extends Seeder
             $statuses = ['aktif', 'cuti', 'mangkir', 'DO', 'lulus', 'tidak_aktif'];
             $status = $statuses[array_rand($statuses)];
 
+            
             $cuti2 = ($status == 'cuti') ? 'yes' : 'no';
 
             $mahasiswa = Mahasiswa::create([
@@ -64,12 +66,14 @@ class DummyDataSeeder extends Seeder
                 'minat' => $faker->randomElement(['Web', 'Mobile', 'Data Science']),
                 'cuti_2' => $cuti2,
                 // 'status_mahasiswa' is not mass assignable in some previous steps or default?
+                // 'status_mahasiswa' is not mass assignable in some previous steps or default? 
                 // In migration 'status_mahasiswa' is enum default 'aktif'.
                 // Ideally it should be fillable but I don't recall adding it to fillable in Step 213 (only added cuti_2).
                 // Let's check Mahasiswa model again if needed, but for now assuming it might be guarded or I should force it.
                 // Wait, if it's not in fillable, create won't work for it.
             ]);
 
+            
             // Force update status if not fillable
             $mahasiswa->status_mahasiswa = $status;
             $mahasiswa->save();
@@ -79,7 +83,7 @@ class DummyDataSeeder extends Seeder
                 'mahasiswa_id' => $mahasiswa->id,
                 'dosen_wali_id' => $dosen->id,
                 'semester_aktif' => $faker->numberBetween(1, 8),
-                'tahun_masuk' => rand(2018, 2025),
+                'tahun_masuk' => $faker->rand(2018,2025),
                 'ipk' => $faker->randomFloat(2, 2.00, 4.00),
                 'sks_tempuh' => $faker->numberBetween(10, 140),
                 'sks_now' => $faker->numberBetween(18, 24),
@@ -98,6 +102,7 @@ class DummyDataSeeder extends Seeder
             $ewsStatus = $faker->randomElement(['tepat_waktu', 'normal', 'perhatian', 'kritis']);
             $kelulusanStatus = $faker->randomElement(['eligible', 'noneligible']);
 
+            
             EarlyWarningSystem::create([
                 'akademik_mahasiswa_id' => $akademik->id,
                 'status' => $ewsStatus,

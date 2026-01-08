@@ -20,6 +20,7 @@ class Mahasiswa extends Model
         'transkrip',
         'telepon',
         'minat',
+        'cuti_2',
     ];
 
     public function user()
