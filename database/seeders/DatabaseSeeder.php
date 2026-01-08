@@ -30,7 +30,8 @@ class DatabaseSeeder extends Seeder
             // khs_krs_mahasiswa_seeder::class,
             // IpsMahasiswaSeeder::class,
             // AkademikMahasiswaSeeder::class,
-            DummyDataSeeder::class,
+            // DummyDataSeeder::class,
+            DummyKhsKrsSeeder::class,
         ]);
     }
 }
