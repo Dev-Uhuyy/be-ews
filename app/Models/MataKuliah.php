@@ -12,6 +12,7 @@ class MataKuliah extends Model
         'prodi_id',
         'kode',
         'name',
+        'koordinator_mk',
         'sks',
         'semester',
         'peminatan_id',

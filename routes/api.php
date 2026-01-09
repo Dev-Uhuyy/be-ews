@@ -43,6 +43,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         // Capaian Mahasiswa Routes
         Route::get('/capaian/all-mahasiswa', [CapaianMhsController::class, 'getRataRataIps']);
         Route::get('/capaian/mk-gagal', [CapaianMhsController::class, 'getTop10MatkulGagal']);
+        Route::get('/capaian/detail-mk-gagal', [CapaianMhsController::class, 'getDetailTop10MatkulGagal']);
+        Route::get('/capaian/detail-mhs-mk-gagal', [CapaianMhsController::class, 'getDetailMahasiswaTop10MatkulGagal']);
         Route::get('/capaian/all-angkatan', [CapaianMhsController::class, 'getAllAngkatan']);
         Route::get('/capaian/export-all-angkatan', [CapaianMhsController::class, 'exportCapaianAngkatan']);
         Route::get('/capaian/mkgagal-angkatan', [CapaianMhsController::class, 'getDaftarGagalPerAngkatan']);

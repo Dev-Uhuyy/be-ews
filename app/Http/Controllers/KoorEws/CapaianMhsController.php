@@ -30,11 +30,41 @@ class CapaianMhsController extends Controller
     public function getTop10MatkulGagal()
     {
         $data = $this->capaianMhsService->getTop10MatakuliahGagal();
+        $grafikIps = $this->capaianMhsService->getGrafikIpsPerAngkatan();
 
         return Top10MatkulGagalResource::collection($data)->additional([
             'meta' => [
                 'status' => 'success',
                 'message' => 'Data 10 matakuliah dengan nilai E terbanyak berhasil diambil',
+                'timestamp' => now()->toIso8601String(),
+            ],
+            'ips_per_semester_angkatan' => $grafikIps
+        ]);
+    }
+
+    public function getDetailTop10MatkulGagal()
+    {
+        $data = $this->capaianMhsService->getDetailTop10MatkulGagal();
+
+        return response()->json([
+            'data' => $data,
+            'meta' => [
+                'status' => 'success',
+                'message' => 'Detail 10 matakuliah dengan nilai E terbanyak berhasil diambil',
+                'timestamp' => now()->toIso8601String(),
+            ],
+        ]);
+    }
+
+    public function getDetailMahasiswaTop10MatkulGagal()
+    {
+        $data = $this->capaianMhsService->getDetailMahasiswaTop10MatkulGagal();
+
+        return response()->json([
+            'data' => $data,
+            'meta' => [
+                'status' => 'success',
+                'message' => 'Detail mahasiswa pada top 10 matakuliah gagal berhasil diambil',
                 'timestamp' => now()->toIso8601String(),
             ],
         ]);

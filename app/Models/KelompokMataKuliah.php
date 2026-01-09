@@ -26,6 +26,6 @@ class KelompokMataKuliah extends Model
 
     public function khs_krs_mahasiswa()
     {
-        return $this->hasMany(KhsKrsMahasiswa::class, 'kelompok_mata_kuliah_id');
+        return $this->hasMany(KhsKrsMahasiswa::class, 'kelompok_id');
     }
 }
