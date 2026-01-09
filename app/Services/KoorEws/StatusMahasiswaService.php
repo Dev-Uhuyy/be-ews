@@ -91,20 +91,4 @@ class StatusMahasiswaService
             ]
         ];
     }
-
-    public function exportTableRingkasanStatusMahasiswa()
-    {
-        $data = Mahasiswa::select('akademik_mahasiswa.tahun_masuk as angkatan')
-            ->selectRaw('COUNT(mahasiswa.id) as total_mahasiswa')
-            ->selectRaw('SUM(CASE WHEN akademik_mahasiswa.ipk < 2 THEN 1 ELSE 0 END) as ipk_kurang_2')
-            ->selectRaw('SUM(CASE WHEN mahasiswa.status_mahasiswa = "mangkir" THEN 1 ELSE 0 END) as mangkir')
-            ->selectRaw('SUM(CASE WHEN mahasiswa.status_mahasiswa = "cuti" THEN 1 ELSE 0 END) as cuti_2x')
-            ->selectRaw('SUM(CASE WHEN mahasiswa.status_mahasiswa = "aktif" AND akademik_mahasiswa.ipk >= 2 THEN 1 ELSE 0 END) as normal')
-            ->join('akademik_mahasiswa', 'mahasiswa.id', '=', 'akademik_mahasiswa.mahasiswa_id')
-            ->groupBy('akademik_mahasiswa.tahun_masuk')
-            ->orderBy('akademik_mahasiswa.tahun_masuk', 'desc')
-            ->get();
-
-        return GetTableRingkasanStatusMahasiswa::collection($data)->toArray(request());
-    }
 }

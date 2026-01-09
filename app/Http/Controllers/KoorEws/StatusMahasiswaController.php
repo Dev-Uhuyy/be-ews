@@ -62,14 +62,4 @@ class StatusMahasiswaController extends Controller
             return $this->exceptionError($e, 'Gagal mendapatkan data mahasiswa berisiko di status mahasiswa EWS');
         }
     }
-
-    public function exportTableRingkasanStatusMahasiswa()
-    {
-        try {
-            $data = $this->StatusMahasiswaService->exportTableRingkasanStatusMahasiswa();
-            return $this->successResponse($data, 'Berhasil mengekspor tabel ringkasan status mahasiswa');
-        } catch (\Exception $e) {
-            return $this->exceptionError($e, 'Gagal mengekspor tabel ringkasan status mahasiswa di status mahasiswa EWS');
-        }
-    }
 }
