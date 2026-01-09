@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\KoorEws\DashboardController;
 use App\Http\Controllers\KoorEws\StatusMahasiswaController;
 use App\Http\Controllers\KoorEws\CapaianMhsController;
+use App\Http\Controllers\KoorEws\StatistikKelulusanController;
 use App\Http\Controllers\MahasiswaEws\DashboardController as MahasiswaDashboardController;
 
 
@@ -27,16 +28,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::middleware(['role:koor|dosen'])->prefix('koor-doswal')->group(function () {
         Route::get('/dashboard/kategori-all', [DashboardController::class, 'kategoriAll']);
         Route::get('/dashboard/ipk-eligible', [DashboardController::class, 'ipkEligible']);
-        Route::get('/status-mahasiswa/status-all', [StatusMahasiswaController::class, 'getAllStatusMahasiswaEws']);
-        Route::get('/status-mahasiswa/ringkasan-status', [StatusMahasiswaController::class, 'getTableRingkasanStatusMahasiswa']);
-        Route::get('/status-mahasiswa/mahasiswa-berisiko', [StatusMahasiswaController::class, 'getMahasiswaBerisko']);
-        Route::get('/status-mahasiswa/ringkasan-status/export', [StatusMahasiswaController::class, 'exportTableRingkasanStatusMahasiswa']);
         Route::get('/dashboard/summary-all', [DashboardController::class, 'summaryAll']);
         Route::get('/dashboard/export-ringkasan', [DashboardController::class, 'exportSummaryAll']);
         Route::get('/dashboard/detail-mahasiswa', [DashboardController::class, 'detailMahasiswa']);
         Route::get('/dashboard/export-detail-mahasiswa', [DashboardController::class, 'exportDetailMahasiswa']);
-        
-        
+
+
     });
 
     Route::middleware(['role:koor'])->prefix('koor-ews')->group(function () {
@@ -47,6 +44,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/capaian/export-all-angkatan', [CapaianMhsController::class, 'exportCapaianAngkatan']);
         Route::get('/capaian/mkgagal-angkatan', [CapaianMhsController::class, 'getDaftarGagalPerAngkatan']);
         Route::get('/capaian/export-mk-gagal', [CapaianMhsController::class, 'exportDaftarGagalPerAngkatan']);
+        // Status Mahasiswa Routes
+        Route::get('/status-mahasiswa/status-all', [StatusMahasiswaController::class, 'getAllStatusMahasiswaEws']);
+        Route::get('/status-mahasiswa/status-angkatan/{angkatan}', [StatusMahasiswaController::class, 'getStatusMahasiswaEwsByAngkatan']);
+        Route::get('/status-mahasiswa/ringkasan-status', [StatusMahasiswaController::class, 'getTableRingkasanStatusMahasiswa']);
+        Route::get('/status-mahasiswa/detail-angkatan/{angkatan}', [StatusMahasiswaController::class, 'getTableRingkasanStatusMahasiswaByAngkatan']);
+        Route::get('/status-mahasiswa/mahasiswa-berisiko', [StatusMahasiswaController::class, 'getMahasiswaBerisiko']);
+        // Statistik Kelulusan Routes
+        Route::get('/statistik-kelulusan/status', [StatistikKelulusanController::class, 'getStatistikKelulusan']);
     });
 
     Route::middleware(['role:mahasiswa'])->prefix('mahasiswa')->group(function () {
