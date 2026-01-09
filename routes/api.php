@@ -58,5 +58,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::middleware(['role:mahasiswa'])->prefix('mahasiswa')->group(function () {
         Route::get('/dashboard/status-mahasiswa', [MahasiswaDashboardController::class, 'statusMahasiswa']);
+        Route::get('/akademik/status-akademik', [\App\Http\Controllers\MahasiswaEws\StatusAkademikController::class, 'getStatusAkademikMahasiswa']);
+        Route::get('/akademik/nilai-mahasiswa', [\App\Http\Controllers\MahasiswaEws\StatusAkademikController::class, 'getDaftarNilaiMahasiswa']);
+        Route::get('/akademik/export-daftar-nilai', [\App\Http\Controllers\MahasiswaEws\StatusAkademikController::class, 'exportDaftarNilai']);
     });
 });
