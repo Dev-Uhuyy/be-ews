@@ -197,4 +197,140 @@ class CapaianMhsService
             ];
         });
     }
+    public function getDetailTop10MatkulGagal()
+    {
+        $top10Ids = KhsKrsMahasiswa::select('matakuliah_id', DB::raw('count(*) as total_gagal'))
+            ->where('nilai_akhir_huruf', 'E')
+            ->groupBy('matakuliah_id')
+            ->orderBy('total_gagal', 'desc')
+            ->limit(10)
+            ->pluck('matakuliah_id');
+
+        $mataKuliahs = \App\Models\MataKuliah::whereIn('id', $top10Ids)
+            ->with(['kelompok_mata_kuliah' => function($q) {
+                $q->with(['dosen_pengampu.user']);
+                $q->withCount(['khs_krs_mahasiswa as total_mahasiswa', 'khs_krs_mahasiswa as jumlah_gagal' => function ($query) {
+                    $query->where('nilai_akhir_huruf', 'E');
+                }]);
+            }])
+            ->get();
+
+        $result = $mataKuliahs->map(function ($mk) {
+            $kelompokStats = $mk->kelompok_mata_kuliah->map(function ($kelompok) {
+                // Determine dosen name
+                $dosenName = 'Belum Ada Dosen';
+                if ($kelompok->dosen_pengampu && $kelompok->dosen_pengampu->user) {
+                    $dosenName = $kelompok->dosen_pengampu->user->name;
+                }
+
+                return [
+                    'dosen_nama' => $dosenName,
+                    'jumlah_mahasiswa_kelas' => $kelompok->total_mahasiswa,
+                    'jumlah_gagal_kelas' => $kelompok->jumlah_gagal,
+                ];
+            });
+
+            $totalGagalMk = $kelompokStats->sum('jumlah_gagal_kelas');
+
+            return [
+                'mata_kuliah' => $mk->name,
+                'kode_mk' => $mk->kode,
+                'koordinator_mk' => $mk->koordinator_mk,
+                'total_gagal_mk' => $totalGagalMk,
+                'detail_dosen' => $kelompokStats,
+            ];
+        });
+
+        // Ensure order matches the top 10 failed count DESC
+        return $result->sortByDesc('total_gagal_mk')->values();
+    }
+    public function getDetailMahasiswaTop10MatkulGagal()
+    {
+        // 1. Get Top 10 Failed Course IDs
+        $top10Ids = KhsKrsMahasiswa::select('matakuliah_id', DB::raw('count(*) as total_gagal'))
+            ->where('nilai_akhir_huruf', 'E')
+            ->groupBy('matakuliah_id')
+            ->orderBy('total_gagal', 'desc')
+            ->limit(10)
+            ->pluck('matakuliah_id');
+
+        // 2. Get the failed records for these courses
+        $failedRecords = KhsKrsMahasiswa::whereIn('matakuliah_id', $top10Ids)
+            ->where('nilai_akhir_huruf', 'E')
+            ->with([
+                'mahasiswa.user',
+                'mata_kuliah',
+                'kelompok_mata_kuliah.dosen_pengampu.user'
+            ])
+            ->get();
+
+        // 3. Transform
+        return $failedRecords->map(function ($record) {
+             $dosenName = 'Belum Ada Dosen';
+             if ($record->kelompok_mata_kuliah && 
+                 $record->kelompok_mata_kuliah->dosen_pengampu && 
+                 $record->kelompok_mata_kuliah->dosen_pengampu->user) {
+                 $dosenName = $record->kelompok_mata_kuliah->dosen_pengampu->user->name;
+             }
+
+             return [
+                 'nama_mahasiswa' => $record->mahasiswa->user->name ?? 'Unknown',
+                 'nim' => $record->mahasiswa->nim,
+                 'nama_matkul' => $record->mata_kuliah->name,
+                 'kode_matkul' => $record->mata_kuliah->kode,
+                 'dosen_pengampu' => $dosenName,
+                 'absen' => $record->absen,
+                 'nilai_akhir_angka' => $record->nilai_akhir_angka,
+                 'nilai_akhir_huruf' => $record->nilai_akhir_huruf,
+             ];
+        });
+    }
+
+    public function getGrafikIpsPerAngkatan()
+    {
+        // Get all students grouped by angkatan (tahun_masuk)
+        // We reuse logic similar to getAllAngkatanStats but focus on per-semester average
+        $students = AkademikMahasiswa::with('mahasiswa.ipsmahasiswa')
+            ->get()
+            ->groupBy('tahun_masuk');
+        
+        $results = [];
+
+        foreach ($students as $angkatan => $list) {
+            if (!$angkatan) continue;
+
+            $semesterAvg = [];
+            // Assuming max 14 semesters
+            for ($i = 1; $i <= 14; $i++) {
+                $totalVal = 0;
+                $count = 0;
+                $col = 'ips_' . $i;
+
+                foreach ($list as $am) {
+                    $ipsRecord = $am->mahasiswa->ipsmahasiswa ?? null;
+                    if ($ipsRecord && !is_null($ipsRecord->$col)) {
+                        $totalVal += $ipsRecord->$col;
+                        $count++;
+                    }
+                }
+
+                // If no student has data for this semester, we can either set it to 0 or null.
+                // Setting to 0 for now as 'rata-rata'
+                $avg = $count > 0 ? round($totalVal / $count, 2) : 0;
+                $semesterAvg['semester_' . $i] = $avg;
+            }
+
+            $results[] = [
+                'angkatan' => $angkatan,
+                'rata_rata_per_semester' => $semesterAvg
+            ];
+        }
+
+        // Sort by angkatan ascending
+        usort($results, function($a, $b) {
+            return $a['angkatan'] <=> $b['angkatan'];
+        });
+
+        return $results;
+    }
 }
