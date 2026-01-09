@@ -5,7 +5,7 @@ namespace App\Http\Resources\KoorEws;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class GetMahasiswaBerisiko extends JsonResource
+class GetStatusEwsByAngkatan extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,13 +15,8 @@ class GetMahasiswaBerisiko extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'nama' => $this->nama,
-            'nim' => $this->nim,
-            'angkatan' => $this->angkatan,
-            'semester' => $this->semester_aktif,
-            'ipk' => $this->ipk,
-            'status' => $this->status,
+            'status_ews' => $this->resource['status_ews'],
+            'grafik_ips' => $this->resource['grafik_ips']
         ];
     }
 }
