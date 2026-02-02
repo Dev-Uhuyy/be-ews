@@ -30,5 +30,10 @@ class RoleSeeder extends Seeder
 
         $roleMahasiswa = Role::firstOrCreate(['name' => 'mahasiswa', 'guard_name' => 'web']);
         $roleMahasiswa->givePermissionTo($permissionMahasiswa);
+
+        // Super Admin
+        $roleSuperAdmin = Role::firstOrCreate(['name' => 'super-admin', 'guard_name' => 'web']);
+        $roleSuperAdmin->givePermissionTo($permissionKoor);
+
     }
 }
