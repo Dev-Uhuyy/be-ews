@@ -7,6 +7,7 @@ use App\Http\Controllers\KoorEws\DashboardController;
 use App\Http\Controllers\KoorEws\StatusMahasiswaController;
 use App\Http\Controllers\KoorEws\CapaianMhsController;
 use App\Http\Controllers\KoorEws\StatistikKelulusanController;
+use App\Http\Controllers\KoorEws\GenerateStatusController;
 use App\Http\Controllers\MahasiswaEws\DashboardController as MahasiswaDashboardController;
 
 
@@ -47,6 +48,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/capaian/mkgagal-angkatan', [CapaianMhsController::class, 'getDaftarGagalPerAngkatan']);
         Route::get('/capaian/export-mk-gagal', [CapaianMhsController::class, 'exportDaftarGagalPerAngkatan']);
         // Status Mahasiswa Routes
+        Route::post('/status-mahasiswa/generate', [GenerateStatusController::class, 'generate']);
         Route::get('/status-mahasiswa/status-all', [StatusMahasiswaController::class, 'getAllStatusMahasiswaEws']);
         Route::get('/status-mahasiswa/status-angkatan/{angkatan}', [StatusMahasiswaController::class, 'getStatusMahasiswaEwsByAngkatan']);
         Route::get('/status-mahasiswa/ringkasan-status', [StatusMahasiswaController::class, 'getTableRingkasanStatusMahasiswa']);
