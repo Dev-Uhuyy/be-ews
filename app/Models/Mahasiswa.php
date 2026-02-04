@@ -15,12 +15,15 @@ class Mahasiswa extends Model
 
     protected $fillable = [
         'user_id',
-        'prodi_id',
         'nim',
         'transkrip',
         'telepon',
         'minat',
         'cuti_2',
+        'ipk',
+        'sks',
+        'status_mahasiswa',
+        'tanggal_yusidium',
     ];
 
     public function user()
