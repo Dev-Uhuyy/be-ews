@@ -20,8 +20,6 @@ class Mahasiswa extends Model
         'telepon',
         'minat',
         'cuti_2',
-        'ipk',
-        'sks',
         'status_mahasiswa',
         'tanggal_yusidium',
     ];
